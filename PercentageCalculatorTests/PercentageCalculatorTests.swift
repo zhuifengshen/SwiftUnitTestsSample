@@ -10,10 +10,13 @@ import XCTest
 @testable import PercentageCalculator
 
 class PercentageCalculatorTests: XCTestCase {
+    var viewController:ViewController!
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        viewController = storyboard.instantiateInitialViewController() as! ViewController
     }
     
     override func tearDown() {
@@ -21,9 +24,19 @@ class PercentageCalculatorTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testPercentage() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let p = viewController.percentage(50, 50)
+        XCTAssert(p == 25)
+    }
+    
+    func testLabelValueShowedProperly(){
+        let _ = viewController.view
+        viewController.updateLabels(Float(80.0), Float(50.0), Float(40.0))
+        XCTAssert(viewController.numberLabel.text == "80.0", "numberLabel doesn't show the right text")
+        XCTAssert(viewController.percentageLabel.text == "50.0%", "percentageLabel doesn't show the right text")
+        XCTAssert(viewController.resultLabel.text == "40.0", "resultLabel doesn't show the right text")
     }
     
     func testPerformanceExample() {
